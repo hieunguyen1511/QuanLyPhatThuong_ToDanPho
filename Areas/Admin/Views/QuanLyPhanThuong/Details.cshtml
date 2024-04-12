@@ -1,0 +1,51 @@
+﻿@model QuanLyPhatThuong_ToDanPho_1.Models.tb_PhanThuong
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_PhanThuong</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenPhanThuong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenPhanThuong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DVT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DVT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TriGia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TriGia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_LoaiPhanThuong.TenLoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_LoaiPhanThuong.TenLoai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

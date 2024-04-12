@@ -1,0 +1,359 @@
+﻿@model IEnumerable<QuanLyPhatThuong_ToDanPho_1.Models.tb_LoaiPhanThuong>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+
+
+<div class="modal fade" id="modalThemDanhMuc" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm danh mục</h4>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                    X
+                </button>
+            </div>
+            @using (Html.BeginForm("ThemDanhMuc", "DanhMucPhanThuong", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <label style="color:red" id="lb_ThemDanhMuc"></label>
+                    <input type="text" class="form-control" onchange="checkDanhMuc(this,document.getElementById('lb_ThemDanhMuc'),document.getElementById('btn_ThemDanhMuc'),'')" id="TenDanhMuc" name="TenDanhMuc" required />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" id="btn_ThemDanhMuc" class="btn btn-success">Thêm danh mục</button>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<p>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#modalThemDanhMuc" class="btn btn-primary">Thêm danh mục</button>
+</p>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered" id="DanhMucPhanThuong">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>
+                                Loại phần thưởng
+                            </th>
+                            <th>Số lượng phần thưởng</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenLoai)
+                                    </td>
+                                    <td>@item.tb_PhanThuong.Count</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSuaDanhMuc-@item.ID">Sửa thông tin</button> |
+                                        @*@Html.ActionLink("Sửa thông tin", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" }) |*@
+                                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, new { @class = "btn btn-success" }) |
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalXoaDanhMuc-@item.ID">Xóa danh mục</button>
+                                        @*@Html.ActionLink("Xóa danh mục", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })*@
+
+
+                                        <div class="modal fade" id="modalSuaDanhMuc-@item.ID" role="dialog" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Sửa danh mục</h4>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                                            X
+                                                        </button>
+                                                    </div>
+                                                    @using (Html.BeginForm("SuaDanhMuc", "DanhMucPhanThuong", FormMethod.Post))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="number" value="@item.ID" name="ID" hidden />
+
+
+                                                        <div class="modal-body">
+                                                            <label style="color:red" id="lb_SuaDanhMuc-@item.ID"></label>
+                                                            <input type="text" class="form-control"  onchange="checkDanhMuc(this,document.getElementById('lb_SuaDanhMuc-@item.ID'),document.getElementById('btn_SuaDanhMuc-@item.ID'),'@item.TenLoai')" value="@item.TenLoai" id="TenDanhMuc" name="TenDanhMuc" />
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button"  class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+                                                            <button type="submit" id="btn_SuaDanhMuc-@item.ID" class="btn btn-success">Lưu</button>
+                                                            @* @Html.ActionLink("Xóa danh mục", "XoaDanhMuc", "DanhMucPhanThuong", new { id = item.ID }, new { @class = "btn btn-danger" })*@
+                                                            @*<button type="submit" class="btn btn-danger">Xóa danh mục</button>*@
+
+                                                        </div>
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="modalXoaDanhMuc-@item.ID" role="dialog" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Thông báo</h4>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                                            X
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <h6 style="color:red">Bạn có muốn xóa danh mục "@item.TenLoai" không?</h6>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+                                                        @Html.ActionLink("Xóa danh mục", "XoaDanhMuc", "DanhMucPhanThuong", new { id = item.ID }, new { @class = "btn btn-danger" })
+                                                        @*<button type="submit" class="btn btn-danger">Xóa danh mục</button>*@
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+
+
+        var table = new DataTable('#DanhMucPhanThuong', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+            },
+        });
+
+    </script>*@
+
+
+
+<script>
+
+    function getDefault_DanhMuc(element,str) {
+        element.value = str
+    }
+
+    function checkDanhMuc(element, label, btn,str) {
+        if (element.value.length > 50) {
+            label.innerHTML = "* Độ dài danh mục không được vượt quá 50"
+            element.value = str
+            btn.disabled = true;
+        }
+        else {
+            label.innerHTML = ""
+            
+            btn.disabled = false;
+        }
+    }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+@{if (Session["LoiThemDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiThemDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiThemDanhMuc"] = null;
+    }
+    else if (Session["ThemDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ThemDanhMuc"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["ThemDanhMuc"] = null;
+    }
+
+}
+
+
+@{if (Session["LoiXoaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiXoaDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiXoaDanhMuc"] = null;
+    }
+    else if (Session["XoaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["XoaDanhMuc"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["XoaDanhMuc"] = null;
+    }
+
+}
+
+
+@{if (Session["LoiSuaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiSuaDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiSuaDanhMuc"] = null;
+    }
+    else if (Session["SuaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuaDanhMuc"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuaDanhMuc"] = null;
+    }
+
+}
+

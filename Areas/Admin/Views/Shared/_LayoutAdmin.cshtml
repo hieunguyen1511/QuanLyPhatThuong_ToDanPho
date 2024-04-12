@@ -1,0 +1,46 @@
+﻿
+@if (Session["TK"] == null)
+{
+    Response.RedirectToRoute("Default", new { controller = "DangNhap", action = "Index", id = UrlParameter.Optional });
+}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TDP - Quản lý phát thưởng</title>
+    <link rel="shortcut icon" type="image/png" href="~/Assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="~/Assets/css/styles.min.css" />
+</head>
+
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- Sidebar Start -->
+        @Html.Partial("_LeftSidebar_partial")
+        <!--  Sidebar End -->
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            @Html.Partial("_Header_partial")
+            <div class="container-fluid">
+                @RenderBody()
+                <div class="py-6 px-6 text-center">
+                    <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/Assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/js/sidebarmenu.js"></script>
+    <script src="~/Assets/js/app.min.js"></script>
+    @*<script src="~/Assets/libs/apexcharts/dist/apexcharts.min.js"></script>*@
+    @*<script src="~/Assets/libs/simplebar/dist/simplebar.js"></script>*@
+    @*<script src="~/Assets/js/dashboard.js"></script>*@
+</body>
+
+</html>

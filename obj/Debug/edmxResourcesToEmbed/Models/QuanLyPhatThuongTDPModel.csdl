@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_QuanLyPhatThuong_ToDanPhoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tb_ChiTietPhatThuong">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_PhatThuong" Type="Int32" Nullable="false" />
+    <Property Name="ID_ThanhVien" Type="Int32" Nullable="false" />
+    <Property Name="ID_PhanThuong" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="TriGia" Type="Int32" />
+    <Property Name="TongTien" Type="Int32" />
+    <Property Name="GhiChu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tb_PhatThuong" Relationship="Self.FK__tb_ChiTie__ID_Ph__5BE2A6F2" FromRole="tb_ChiTietPhatThuong" ToRole="tb_PhatThuong" />
+    <NavigationProperty Name="tb_PhanThuong" Relationship="Self.FK__tb_ChiTie__ID_Ph__5DCAEF64" FromRole="tb_ChiTietPhatThuong" ToRole="tb_PhanThuong" />
+    <NavigationProperty Name="tb_ThanhVien" Relationship="Self.FK__tb_ChiTie__ID_Th__5CD6CB2B" FromRole="tb_ChiTietPhatThuong" ToRole="tb_ThanhVien" />
+  </EntityType>
+  <EntityType Name="tb_DanhMucPhatThuong">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDanhMuc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_PhatThuong" Relationship="Self.FK__tb_PhatTh__ID_Da__59063A47" FromRole="tb_DanhMucPhatThuong" ToRole="tb_PhatThuong" />
+  </EntityType>
+  <EntityType Name="tb_HoGiaDinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaHoGiaDinh" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ChuHo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_ThanhVien" Relationship="Self.FK__tb_ThanhV__ID_Ho__4BAC3F29" FromRole="tb_HoGiaDinh" ToRole="tb_ThanhVien" />
+  </EntityType>
+  <EntityType Name="tb_LoaiPhanThuong">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoai" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tb_PhanThuong" Relationship="Self.FK__tb_PhanTh__ID_Lo__5441852A" FromRole="tb_LoaiPhanThuong" ToRole="tb_PhanThuong" />
+  </EntityType>
+  <EntityType Name="tb_PhanThuong">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_LoaiPhanThuong" Type="Int32" Nullable="false" />
+    <Property Name="TenPhanThuong" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DVT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TriGia" Type="Int32" />
+    <NavigationProperty Name="tb_ChiTietPhatThuong" Relationship="Self.FK__tb_ChiTie__ID_Ph__5DCAEF64" FromRole="tb_PhanThuong" ToRole="tb_ChiTietPhatThuong" />
+    <NavigationProperty Name="tb_LoaiPhanThuong" Relationship="Self.FK__tb_PhanTh__ID_Lo__5441852A" FromRole="tb_PhanThuong" ToRole="tb_LoaiPhanThuong" />
+  </EntityType>
+  <EntityType Name="tb_PhatThuong">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_DanhMucPhatThuong" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Precision="0" />
+    <Property Name="NgayPhat" Type="DateTime" Precision="0" />
+    <Property Name="GhiChu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_ChiTietPhatThuong" Relationship="Self.FK__tb_ChiTie__ID_Ph__5BE2A6F2" FromRole="tb_PhatThuong" ToRole="tb_ChiTietPhatThuong" />
+    <NavigationProperty Name="tb_DanhMucPhatThuong" Relationship="Self.FK__tb_PhatTh__ID_Da__59063A47" FromRole="tb_PhatThuong" ToRole="tb_DanhMucPhatThuong" />
+  </EntityType>
+  <EntityType Name="tb_ThanhTichHocTap">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_ThanhVien" Type="Int32" Nullable="false" />
+    <Property Name="ThanhTich" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="XepLoai" Type="Int32" />
+    <NavigationProperty Name="tb_ThanhVien" Relationship="Self.FK__tb_ThanhT__ID_Th__4F7CD00D" FromRole="tb_ThanhTichHocTap" ToRole="tb_ThanhVien" />
+  </EntityType>
+  <EntityType Name="tb_ThanhVien">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HoGiaDinh" Type="Int32" Nullable="false" />
+    <Property Name="HoTen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="GioiTinh" Type="Boolean" />
+    <Property Name="DanToc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TonGiao" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CCCD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ChuHo" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tb_ChiTietPhatThuong" Relationship="Self.FK__tb_ChiTie__ID_Th__5CD6CB2B" FromRole="tb_ThanhVien" ToRole="tb_ChiTietPhatThuong" />
+    <NavigationProperty Name="tb_HoGiaDinh" Relationship="Self.FK__tb_ThanhV__ID_Ho__4BAC3F29" FromRole="tb_ThanhVien" ToRole="tb_HoGiaDinh" />
+    <NavigationProperty Name="tb_ThanhTichHocTap" Relationship="Self.FK__tb_ThanhT__ID_Th__4F7CD00D" FromRole="tb_ThanhVien" ToRole="tb_ThanhTichHocTap" />
+  </EntityType>
+  <Association Name="FK__tb_ChiTie__ID_Ph__5BE2A6F2">
+    <End Role="tb_PhatThuong" Type="Self.tb_PhatThuong" Multiplicity="1" />
+    <End Role="tb_ChiTietPhatThuong" Type="Self.tb_ChiTietPhatThuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_PhatThuong">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietPhatThuong">
+        <PropertyRef Name="ID_PhatThuong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Ph__5DCAEF64">
+    <End Role="tb_PhanThuong" Type="Self.tb_PhanThuong" Multiplicity="1" />
+    <End Role="tb_ChiTietPhatThuong" Type="Self.tb_ChiTietPhatThuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_PhanThuong">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietPhatThuong">
+        <PropertyRef Name="ID_PhanThuong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Th__5CD6CB2B">
+    <End Role="tb_ThanhVien" Type="Self.tb_ThanhVien" Multiplicity="1" />
+    <End Role="tb_ChiTietPhatThuong" Type="Self.tb_ChiTietPhatThuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_ThanhVien">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietPhatThuong">
+        <PropertyRef Name="ID_ThanhVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_PhatTh__ID_Da__59063A47">
+    <End Role="tb_DanhMucPhatThuong" Type="Self.tb_DanhMucPhatThuong" Multiplicity="1" />
+    <End Role="tb_PhatThuong" Type="Self.tb_PhatThuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_DanhMucPhatThuong">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_PhatThuong">
+        <PropertyRef Name="ID_DanhMucPhatThuong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ThanhV__ID_Ho__4BAC3F29">
+    <End Role="tb_HoGiaDinh" Type="Self.tb_HoGiaDinh" Multiplicity="1" />
+    <End Role="tb_ThanhVien" Type="Self.tb_ThanhVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_HoGiaDinh">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ThanhVien">
+        <PropertyRef Name="ID_HoGiaDinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_PhanTh__ID_Lo__5441852A">
+    <End Role="tb_LoaiPhanThuong" Type="Self.tb_LoaiPhanThuong" Multiplicity="1" />
+    <End Role="tb_PhanThuong" Type="Self.tb_PhanThuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_LoaiPhanThuong">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_PhanThuong">
+        <PropertyRef Name="ID_LoaiPhanThuong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ThanhT__ID_Th__4F7CD00D">
+    <End Role="tb_ThanhVien" Type="Self.tb_ThanhVien" Multiplicity="1" />
+    <End Role="tb_ThanhTichHocTap" Type="Self.tb_ThanhTichHocTap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_ThanhVien">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ThanhTichHocTap">
+        <PropertyRef Name="ID_ThanhVien" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_QuanLyPhatThuong_ToDanPhoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tb_ChiTietPhatThuong" EntityType="Self.tb_ChiTietPhatThuong" />
+    <EntitySet Name="tb_DanhMucPhatThuong" EntityType="Self.tb_DanhMucPhatThuong" />
+    <EntitySet Name="tb_HoGiaDinh" EntityType="Self.tb_HoGiaDinh" />
+    <EntitySet Name="tb_LoaiPhanThuong" EntityType="Self.tb_LoaiPhanThuong" />
+    <EntitySet Name="tb_PhanThuong" EntityType="Self.tb_PhanThuong" />
+    <EntitySet Name="tb_PhatThuong" EntityType="Self.tb_PhatThuong" />
+    <EntitySet Name="tb_ThanhTichHocTap" EntityType="Self.tb_ThanhTichHocTap" />
+    <EntitySet Name="tb_ThanhVien" EntityType="Self.tb_ThanhVien" />
+    <AssociationSet Name="FK__tb_ChiTie__ID_Ph__5BE2A6F2" Association="Self.FK__tb_ChiTie__ID_Ph__5BE2A6F2">
+      <End Role="tb_PhatThuong" EntitySet="tb_PhatThuong" />
+      <End Role="tb_ChiTietPhatThuong" EntitySet="tb_ChiTietPhatThuong" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Ph__5DCAEF64" Association="Self.FK__tb_ChiTie__ID_Ph__5DCAEF64">
+      <End Role="tb_PhanThuong" EntitySet="tb_PhanThuong" />
+      <End Role="tb_ChiTietPhatThuong" EntitySet="tb_ChiTietPhatThuong" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Th__5CD6CB2B" Association="Self.FK__tb_ChiTie__ID_Th__5CD6CB2B">
+      <End Role="tb_ThanhVien" EntitySet="tb_ThanhVien" />
+      <End Role="tb_ChiTietPhatThuong" EntitySet="tb_ChiTietPhatThuong" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_PhatTh__ID_Da__59063A47" Association="Self.FK__tb_PhatTh__ID_Da__59063A47">
+      <End Role="tb_DanhMucPhatThuong" EntitySet="tb_DanhMucPhatThuong" />
+      <End Role="tb_PhatThuong" EntitySet="tb_PhatThuong" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ThanhV__ID_Ho__4BAC3F29" Association="Self.FK__tb_ThanhV__ID_Ho__4BAC3F29">
+      <End Role="tb_HoGiaDinh" EntitySet="tb_HoGiaDinh" />
+      <End Role="tb_ThanhVien" EntitySet="tb_ThanhVien" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_PhanTh__ID_Lo__5441852A" Association="Self.FK__tb_PhanTh__ID_Lo__5441852A">
+      <End Role="tb_LoaiPhanThuong" EntitySet="tb_LoaiPhanThuong" />
+      <End Role="tb_PhanThuong" EntitySet="tb_PhanThuong" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ThanhT__ID_Th__4F7CD00D" Association="Self.FK__tb_ThanhT__ID_Th__4F7CD00D">
+      <End Role="tb_ThanhVien" EntitySet="tb_ThanhVien" />
+      <End Role="tb_ThanhTichHocTap" EntitySet="tb_ThanhTichHocTap" />
+    </AssociationSet>
+    <EntitySet Name="tb_Log" EntityType="db_QuanLyPhatThuong_ToDanPhoModel.tb_Log" />
+    <EntitySet Name="tb_TaiKhoan" EntityType="db_QuanLyPhatThuong_ToDanPhoModel.tb_TaiKhoan" />
+    <AssociationSet Name="FK__tb_Log__ID_TaiKh__6383C8BA" Association="db_QuanLyPhatThuong_ToDanPhoModel.FK__tb_Log__ID_TaiKh__6383C8BA">
+      <End Role="tb_TaiKhoan" EntitySet="tb_TaiKhoan" />
+      <End Role="tb_Log" EntitySet="tb_Log" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tb_Log">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_TaiKhoan" Type="Int32" Nullable="false" />
+    <Property Name="NgayThaoTac" Type="DateTime" Precision="0" />
+    <Property Name="NoiDung" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tb_TaiKhoan" Relationship="db_QuanLyPhatThuong_ToDanPhoModel.FK__tb_Log__ID_TaiKh__6383C8BA" FromRole="tb_Log" ToRole="tb_TaiKhoan" />
+  </EntityType>
+  <EntityType Name="tb_TaiKhoan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Pass" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="NgayTao" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="tb_Log" Relationship="db_QuanLyPhatThuong_ToDanPhoModel.FK__tb_Log__ID_TaiKh__6383C8BA" FromRole="tb_TaiKhoan" ToRole="tb_Log" />
+  </EntityType>
+  <Association Name="FK__tb_Log__ID_TaiKh__6383C8BA">
+    <End Type="db_QuanLyPhatThuong_ToDanPhoModel.tb_TaiKhoan" Role="tb_TaiKhoan" Multiplicity="1" />
+    <End Type="db_QuanLyPhatThuong_ToDanPhoModel.tb_Log" Role="tb_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_TaiKhoan">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_Log">
+        <PropertyRef Name="ID_TaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
